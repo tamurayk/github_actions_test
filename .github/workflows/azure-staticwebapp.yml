@@ -21,7 +21,7 @@ on:
     branches:
       - develop
 
-# Environment variables available to all jobs and steps in this workflow
+# Environment variables available to all jobs and steps in this workflowaa
 env:
   APP_LOCATION: "/" # location of your client code
   API_LOCATION: "api" # location of your api source code - optional
@@ -48,8 +48,7 @@ jobs:
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: ${{ env.APP_LOCATION }}
           api_location: ${{ env.API_LOCATION }}
-          #app_artifact_location: ${{ env.APP_ARTIFACT_LOCATION }}
-          app_artifact_location: "out" # location of client code build output
+          app_artifact_location: ${{ env.APP_ARTIFACT_LOCATION }}
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
