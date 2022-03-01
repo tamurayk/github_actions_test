@@ -52,6 +52,9 @@ jobs:
         env:
           FRONTEND_ENDPOINT: 'https://example.com/'
           API_ENDPOINT: 'https://ecample.com/api'
+        run: |
+          echo FRONTEND_ENDPOINT: ${{ FRONTEND_ENDPOINT }}
+          echo API_ENDPOINT: ${{ API_ENDPOINT }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
