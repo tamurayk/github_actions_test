@@ -47,14 +47,14 @@ jobs:
         with:
           submodules: true
           
-#      - name: Build And Deploy
-#        id: builddeploy
-#        env:
-#          FRONTEND_ENDPOINT: 'https://example.com/'
-#          API_ENDPOINT: 'https://ecample.com/api'
-#        run: |
-#          echo FRONTEND_ENDPOINT: ${{ FRONTEND_ENDPOINT }}
-#          echo API_ENDPOINT: ${{ API_ENDPOINT }}
+      - name: Build And Deploy
+        id: builddeploy
+        env:
+          FRONTEND_ENDPOINT: 'https://example.com/'
+          API_ENDPOINT: 'https://ecample.com/api'
+        run: |
+          echo FRONTEND_ENDPOINT: ${{ FRONTEND_ENDPOINT }}
+          echo API_ENDPOINT: ${{ API_ENDPOINT }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
@@ -63,6 +63,10 @@ jobs:
     steps:
       - name: Close Pull Request
         id: closepullrequest
+        run: |
+          echo FRONTEND_ENDPOINT: ${{ FRONTEND_ENDPOINT }}
+          echo API_ENDPOINT: ${{ API_ENDPOINT }}
+  
       - uses: actions/checkout@v2
         with:
           action: "close"
