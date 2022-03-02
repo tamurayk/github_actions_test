@@ -27,6 +27,10 @@ env:
   API_LOCATION: "api" # location of your api source code - optional
   APP_ARTIFACT_LOCATION: "out" # location of client code build output
   AZURE_STATIC_WEB_APPS_API_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }} # secret containing deployment token for your static web app
+  
+  # GITHUB_REF: PR merge branch refs/pull/:prNumber/merge
+  # See: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+  PR_NUMBER: "`echo $GITHUB_REF | sed -e 's/[^0-9]//g'`"
 
 jobs:
   build_and_deploy_job:
@@ -34,9 +38,30 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
+      - name: echo PR_NUMBER
+        run: |
+          echo PR_NUMBER: ${{ env.PR_NUMBER }}
+  
       - uses: actions/checkout@v2
         with:
           submodules: true
+          
+      - name: Set env FRONTEND_ENDPOINT
+        run: |
+          if [[ $GITHUB_EVENT_NAME == 'push' ]]; then
+            # $GITHUB_ENV
+            # See: https://docs.github.com/ja/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
+            echo "FRONTEND_ENDPOINT='https://ashy-pond-0cc79e810.1.azurestaticapps.net/'" >> "$GITHUB_ENV"
+          else
+            # pre-production environment(実稼働前環境)のURL: https://<SUBDOMAIN-PULL_REQUEST_ID>.<AZURE_REGION>.azurestaticapps.net
+            # See: https://docs.microsoft.com/ja-jp/azure/static-web-apps/review-publish-pull-requests#review-changes
+            echo "FRONTEND_ENDPOINT='https://ashy-pond-0cc79e810-${{ env.PR_NUMBER }}.centralus.1.azurestaticapps.net/'" >> "$GITHUB_ENV"
+          fi
+
+      - name: Echo env FRONTEND_ENDPOINT
+        run: |
+          echo FRONTEND_ENDPOINT: ${{ env.FRONTEND_ENDPOINT }}
+          
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
