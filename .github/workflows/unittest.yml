@@ -22,6 +22,7 @@ on:
 env:
   # GITHUB_REF: PR merge branch refs/pull/:prNumber/merge
   # See: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+  REF: $GITHUB_REF
   PR_NUMBER: "`echo $GITHUB_REF | sed -e 's/[^0-9]//g'`"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -47,14 +48,17 @@ jobs:
           echo test, and deploy your project.
 
       - name: Set env FRONTEND_ENDPOINT
+        # $GITHUB_ENV
+        # See: https://docs.github.com/ja/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
         run: |
+          echo REF: ${{ env.PEF }}
           echo PR_NUMBER: ${{ env.PR_NUMBER }}
           if [[ $GITHUB_EVENT_NAME == 'push' ]]; then
            echo "FRONTEND_ENDPOINT='https://example.com/'" >> "$GITHUB_ENV"
           else
            echo "FRONTEND_ENDPOINT='https://example.com/preview/${{ env.PR_NUMBER }}'" >> "$GITHUB_ENV"
           fi
-          echo FRONTEND_ENDPOINT: ${{ env.FRONTEND_ENDPOINT }}
+          #echo FRONTEND_ENDPOINT: ${{ env.FRONTEND_ENDPOINT }} #この段階では env.FRONTEND_ENDPOINT は設定されてない
           
       - name: echo env FRONTEND_ENDPOINT
         run: |
