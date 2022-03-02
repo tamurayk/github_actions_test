@@ -56,7 +56,7 @@ jobs:
         run: |
           echo PR_NUMBER: ${{ env.PR_NUMBER }}
           echo HOGE: ${{ env.HOGE }}
-          echo FRONTEND_ENDPOINT_TEST: ${{ env.FRONTEND_ENDPOINT_TEST }}
+#          echo FRONTEND_ENDPOINT_TEST: ${{ env.FRONTEND_ENDPOINT_TEST }}
           
           if [[ $GITHUB_EVENT_NAME == 'push' ]]; then
            echo "FRONTEND_ENDPOINT='https://example.com/'" >> "$GITHUB_ENV"
