@@ -23,7 +23,8 @@ env:
   # GITHUB_REF: PR merge branch refs/pull/:prNumber/merge
   # See: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
   PR_NUMBER: echo $GITHUB_REF | sed -e 's/[^0-9]//g'
-  HOGE: ${{ format('{{Hello {0} {1} {2}!}}', env.PR_NUMBER, 'the', 'Octocat') }}
+  HOGE: ${{ format('{{Hello {0} {1} {2}!}}', 'Mona', 'the', 'Octocat') }}
+  FRONTEND_ENDPOINT_TEST: $PR_NUMBER
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
