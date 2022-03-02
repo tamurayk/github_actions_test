@@ -49,6 +49,8 @@ jobs:
       - name: Set env FRONTEND_ENDPOINT
         run: |
           echo PR_NUMBER: ${{ env.PR_NUMBER }}
+          echo format('{{Hello {0} {1} {2}!}}', 'Mona', 'the', 'Octocat')
+          echo format('{{Hello {0} {1} {2}!}}', env.PR_NUMBER, 'the', 'Octocat')
           if [[ $GITHUB_EVENT_NAME == 'push' ]]; then
            echo "FRONTEND_ENDPOINT='https://example.com/'" >> "$GITHUB_ENV"
           else
