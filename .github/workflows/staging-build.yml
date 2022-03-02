@@ -57,10 +57,18 @@ jobs:
       - name: Set env FRONTEND_ENDPOINT
         run: |
           if [[ $GITHUB_EVENT_NAME == 'push' ]]; then
-           echo "FRONTEND_ENDPOINT='https://example.com/'" >> "$GITHUB_ENV"
+            # $GITHUB_ENV
+            # See: https://docs.github.com/ja/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
+            echo "FRONTEND_ENDPOINT='https://ashy-pond-0cc79e810.1.azurestaticapps.net/'" >> "$GITHUB_ENV"
           else
-           echo "FRONTEND_ENDPOINT='https://example.com/preview/${{ env.PR_NUMBER }}'" >> "$GITHUB_ENV"
+            # pre-production environment(実稼働前環境)のURL: https://<SUBDOMAIN-PULL_REQUEST_ID>.<AZURE_REGION>.azurestaticapps.net
+            # See: https://docs.microsoft.com/ja-jp/azure/static-web-apps/review-publish-pull-requests#review-changes
+            echo "FRONTEND_ENDPOINT='https://ashy-pond-0cc79e810-${{ env.PR_NUMBER }}.centralus.1.azurestaticapps.net/'" >> "$GITHUB_ENV"
           fi
+
+      - name: Echo env FRONTEND_ENDPOINT
+        run: |
+          echo FRONTEND_ENDPOINT: ${{ env.FRONTEND_ENDPOINT }}
           
       - name: Build And Deploy
         id: builddeploy
