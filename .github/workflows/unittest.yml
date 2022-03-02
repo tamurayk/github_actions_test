@@ -27,7 +27,7 @@ env:
   HOGE: ${{ format('{{Hello {0} {1} {2}!}}', 'Mona', 'the', 'Octocat') }}
   #FRONTEND_ENDPOINT_TEST: "PR: ${PR_NUMBER}" #/home/runner/work/_temp/f2163af7-e9bc-4608-bd2a-8734f048787c.sh: line 9: PR:: command not found
   #FRONTEND_ENDPOINT_TEST: "${PR_NUMBER}" #/home/runner/work/_temp/e5e07238-e6ba-4ef5-a99d-28e4b8801634.sh: line 9: ${PR_NUMBER}: command not found
-  FRONTEND_ENDPOINT_TEST: $PR_NUMBER
+  #FRONTEND_ENDPOINT_TEST: $PR_NUMBER #/home/runner/work/_temp/a32bab4e-35d6-4d10-94b5-aac7bcdc44da.sh: line 9: $PR_NUMBER: command not found
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -60,8 +60,7 @@ jobs:
           if [[ $GITHUB_EVENT_NAME == 'push' ]]; then
            echo "FRONTEND_ENDPOINT='https://example.com/'" >> "$GITHUB_ENV"
           else
-           #echo "FRONTEND_ENDPOINT='https://example.com/preview/$PR_NUMBER'/hoge" >> "$GITHUB_ENV"
-           echo "FRONTEND_ENDPOINT=`$FRONTEND_ENDPOINT_TEST`" >> "$GITHUB_ENV"
+           echo "FRONTEND_ENDPOINT='https://example.com/preview/$PR_NUMBER'/hoge" >> "$GITHUB_ENV"
           fi
           
       - name: echo env FRONTEND_ENDPOINT
