@@ -55,7 +55,8 @@ jobs:
           else
             # pre-production environment(実稼働前環境)のURL: https://<SUBDOMAIN-PULL_REQUEST_ID>.<AZURE_REGION>.azurestaticapps.net
             # See: https://docs.microsoft.com/ja-jp/azure/static-web-apps/review-publish-pull-requests#review-changes
-            echo 
+            echo "FRONTEND_ENDPOINT='https://ashy-pond-0cc79e810-${{ env.PR_NUMBER }}.centralus.1.azurestaticapps.net/'" >> "$GITHUB_ENV"
+          fi
           #echo FRONTEND_ENDPOINT: ${{ env.FRONTEND_ENDPOINT }} #この段階では env.FRONTEND_ENDPOINT は設定されてない
           
       - name: echo env FRONTEND_ENDPOINT
