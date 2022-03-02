@@ -58,5 +58,11 @@ jobs:
           if [  github.event_name == 'pull_request' ]; then
             echo FRONTEND_ENDPOINT: ${{ env.FRONTEND_ENDPOINT }}
           else
-            echo FRONTEND_ENDPOINT: ${{ env.FRONTEND_ENDPOINT_PREVIEW }}
+            echo FRONTEND_ENDPOINT_PREVIEW: ${{ env.FRONTEND_ENDPOINT_PREVIEW }}
           fi
+          
+      - name: switch env by github.event_name 
+        env:
+          FRONTEND_ENDPOINT: if [ github.event_name == 'pull_request' ]; then 'https://example.com/' else 'https://example.com/preview' fi
+        run: |
+          echo FRONTEND_ENDPOINT: ${{ env.FRONTEND_ENDPOINT }}
