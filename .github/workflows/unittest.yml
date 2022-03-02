@@ -51,7 +51,7 @@ jobs:
         # $GITHUB_ENV
         # See: https://docs.github.com/ja/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
         run: |
-          echo REF: ${{ env.PEF }}
+          echo REF: ${{ env.REF }}
           echo PR_NUMBER: ${{ env.PR_NUMBER }}
           if [[ $GITHUB_EVENT_NAME == 'push' ]]; then
            echo "FRONTEND_ENDPOINT='https://example.com/'" >> "$GITHUB_ENV"
