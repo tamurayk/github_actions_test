@@ -33,14 +33,6 @@ env:
   PR_NUMBER: "`echo $GITHUB_REF | sed -e 's/[^0-9]//g'`"
 
 jobs:
-  get_pr_number:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    runs-on: ubuntu-latest
-    name: GET Pull Request No
-    steps:
-      run: |
-        echo PR_NUMBER: ${{ env.PR_NUMBER }}
-    
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
