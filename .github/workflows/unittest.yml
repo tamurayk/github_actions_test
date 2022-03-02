@@ -46,23 +46,18 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
   
-      - name: echo PR_NUMBER
+      - name: echo env PR_NUMBER
         run: |
           echo PR_NUMBER: ${{ env.PR_NUMBER }}
-  
-      - name: switch env by github.event_name
-        env:
-          FRONTEND_ENDPOINT: 'https://example.com/'
-          FRONTEND_ENDPOINT_PREVIEW: 'https://preview.example.com/'
+
+      - name: Set env FRONTEND_ENDPOINT
         run: |
-          if [  github.event_name == 'pull_request' ]; then
-            echo FRONTEND_ENDPOINT: ${{ env.FRONTEND_ENDPOINT }}
+          if [[ $GITHUB_EVENT_NAME == 'push' ]]; then
+           echo "FRONTEND_ENDPOINT='https://example.com/'" >> "$GITHUB_ENV"
           else
-            echo FRONTEND_ENDPOINT_PREVIEW: ${{ env.FRONTEND_ENDPOINT_PREVIEW }}
+           echo "FRONTEND_ENDPOINT='https://example.com/preview'" >> "$GITHUB_ENV"
           fi
           
-      - name: switch env by github.event_name 
-        env:
-          FRONTEND_ENDPOINT: if [ github.event_name == 'pull_request' ]; then 'https://example.com/'; else 'https://example.com/preview'; fi
+      - name: echo env FRONTEND_ENDPOINT
         run: |
           echo FRONTEND_ENDPOINT: ${{ env.FRONTEND_ENDPOINT }}
