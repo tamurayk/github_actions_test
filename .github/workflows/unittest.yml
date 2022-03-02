@@ -19,11 +19,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
-  # GITHUB_REF: PR merge branch refs/pull/:prNumber/merge
-  # See: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
-  PR_NUMBER: echo $GITHUB_REF | sed -e 's/[^0-9]//g'
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -46,7 +41,9 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
   
-      - name: echo env PR_NUMBER
+      - name: set env PR_NUMBER
+        env:
+          PR_NUMBER: echo $GITHUB_REF | sed -e 's/[^0-9]//g'
         run: |
           echo PR_NUMBER: ${{ env.PR_NUMBER }}
 
@@ -55,7 +52,7 @@ jobs:
           if [[ $GITHUB_EVENT_NAME == 'push' ]]; then
            echo "FRONTEND_ENDPOINT='https://example.com/'" >> "$GITHUB_ENV"
           else
-           echo "FRONTEND_ENDPOINT='https://example.com/preview'" >> "$GITHUB_ENV"
+           echo "FRONTEND_ENDPOINT='https://example.com/preview/$PR_NUMBER'" >> "$GITHUB_ENV"
           fi
           
       - name: echo env FRONTEND_ENDPOINT
