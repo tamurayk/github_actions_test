@@ -23,6 +23,7 @@ env:
   # GITHUB_REF: PR merge branch refs/pull/:prNumber/merge
   # See: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
   PR_NUMBER: echo $GITHUB_REF | sed -e 's/[^0-9]//g'
+  HOGE: format('{{Hello {0} {1} {2}!}}', env.PR_NUMBER, 'the', 'Octocat')
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -49,8 +50,7 @@ jobs:
       - name: Set env FRONTEND_ENDPOINT
         run: |
           echo PR_NUMBER: ${{ env.PR_NUMBER }}
-          echo format('{{Hello {0} {1} {2}!}}', 'Mona', 'the', 'Octocat')
-          echo format('{{Hello {0} {1} {2}!}}', env.PR_NUMBER, 'the', 'Octocat')
+          echo HOGE: ${{ env.HOGE }}
           if [[ $GITHUB_EVENT_NAME == 'push' ]]; then
            echo "FRONTEND_ENDPOINT='https://example.com/'" >> "$GITHUB_ENV"
           else
