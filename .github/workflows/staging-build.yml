@@ -65,6 +65,8 @@ jobs:
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
+        env:
+          PUBLIC_FRONTEND_ENDPOINT: $FRONTEND_ENDPOINT
         with:
           azure_static_web_apps_api_token: ${{ env.AZURE_STATIC_WEB_APPS_API_TOKEN }} # secret containing api token for app
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
@@ -75,6 +77,10 @@ jobs:
           api_location: ${{ env.API_LOCATION }}
           app_artifact_location: ${{ env.APP_ARTIFACT_LOCATION }}
           ###### End of Repository/Build Configurations ######
+
+      - name: Echo env PUBLIC_FRONTEND_ENDPOINT
+        run: |
+          echo PUBLIC_FRONTEND_ENDPOINT: ${{ env.PUBLIC_FRONTEND_ENDPOINT }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
