@@ -26,15 +26,6 @@ env:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  get_pr_number:
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    runs-on: ubuntu-latest
-    name: GET Pull Request No
-    steps:
-      - name: echo PR_NUMBER
-        run: |
-          echo PR_NUMBER: ${{ env.PR_NUMBER }}
-
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
@@ -54,3 +45,7 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+  
+      - name: echo PR_NUMBER
+        run: |
+          echo PR_NUMBER: ${{ env.PR_NUMBER }}
