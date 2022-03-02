@@ -52,7 +52,7 @@ jobs:
           if [[ $GITHUB_EVENT_NAME == 'push' ]]; then
            echo "FRONTEND_ENDPOINT='https://example.com/'" >> "$GITHUB_ENV"
           else
-           echo "FRONTEND_ENDPOINT='https://example.com/preview/$PR_NUMBER'" >> "$GITHUB_ENV"
+           echo "FRONTEND_ENDPOINT='https://example.com/preview/${{ env.PR_NUMBER }}'" >> "$GITHUB_ENV"
           fi
           
       - name: echo env FRONTEND_ENDPOINT
