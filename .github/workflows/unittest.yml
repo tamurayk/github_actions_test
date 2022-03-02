@@ -26,7 +26,7 @@ env:
   PR_NUMBER: 999
   HOGE: ${{ format('{{Hello {0} {1} {2}!}}', 'Mona', 'the', 'Octocat') }}
   #FRONTEND_ENDPOINT_TEST: "PR: ${PR_NUMBER}" #/home/runner/work/_temp/f2163af7-e9bc-4608-bd2a-8734f048787c.sh: line 9: PR:: command not found
-  FRONTEND_ENDPOINT_TEST: "PR: ${PR_NUMBER}"
+  FRONTEND_ENDPOINT_TEST: "${PR_NUMBER}"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
