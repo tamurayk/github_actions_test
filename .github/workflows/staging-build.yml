@@ -10,6 +10,9 @@
 #
 # 3. Change the values for the APP_LOCATION, API_LOCATION and APP_ARTIFACT_LOCATION, AZURE_STATIC_WEB_APPS_API_TOKEN environment variables (below).
 #    For instructions on setting up the appropriate configuration values go to https://docs.microsoft.com/azure/static-web-apps/front-end-frameworks
+
+# Workflow syntax for GitHub Actions (GitHub Actionsのワークフロー構文)
+# See: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
 name: github_actions_test build
 
 on:
@@ -77,6 +80,8 @@ jobs:
           api_location: ${{ env.API_LOCATION }}
           app_artifact_location: ${{ env.APP_ARTIFACT_LOCATION }}
           ###### End of Repository/Build Configurations ######
+        run: |
+          echo PUBLIC_FRONTEND_ENDPOINT: ${{ env.PUBLIC_FRONTEND_ENDPOINT }}
 
       - name: Echo env PUBLIC_FRONTEND_ENDPOINT
         run: |
