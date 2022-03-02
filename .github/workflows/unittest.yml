@@ -31,8 +31,9 @@ jobs:
     runs-on: ubuntu-latest
     name: GET Pull Request No
     steps:
-      run: |
-        echo PR_NUMBER: ${{ env.PR_NUMBER }}
+      - name: echo PR_NUMBER
+        run: |
+          echo PR_NUMBER: ${{ env.PR_NUMBER }}
 
   # This workflow contains a single job called "build"
   build:
