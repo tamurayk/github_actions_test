@@ -19,8 +19,21 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  # GITHUB_REF: PR merge branch refs/pull/:prNumber/merge
+  # See: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+  PR_NUMBER: ${{ echo $GITHUB_REF | sed -e 's/[^0-9]//g') }}
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  get_pr_number:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: GET Pull Request No
+    steps:
+      run: |
+        echo PR_NUMBER: ${{ env.PR_NUMBER }}
+
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
