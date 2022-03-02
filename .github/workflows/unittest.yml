@@ -49,3 +49,14 @@ jobs:
       - name: echo PR_NUMBER
         run: |
           echo PR_NUMBER: ${{ env.PR_NUMBER }}
+  
+      - name: switch env by github.event_name
+        env:
+          FRONTEND_ENDPOINT: 'https://example.com/'
+          FRONTEND_ENDPOINT_PREVIEW: 'https://preview.example.com/'
+        run: |
+          if [  github.event_name == 'pull_request' ]; then
+            echo FRONTEND_ENDPOINT: ${{ env.FRONTEND_ENDPOINT }}
+          else
+            echo FRONTEND_ENDPOINT: ${{ env.FRONTEND_ENDPOINT_PREVIEW }}
+          fi

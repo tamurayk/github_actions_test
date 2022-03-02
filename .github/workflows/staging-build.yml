@@ -30,7 +30,7 @@ env:
   
   # GITHUB_REF: PR merge branch refs/pull/:prNumber/merge
   # See: https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
-  PR_NUMBER: ${{ echo $GITHUB_REF | sed -e 's/[^0-9]//g') }}
+  PR_NUMBER: echo $GITHUB_REF | sed -e 's/[^0-9]//g'
 
 jobs:
   get_pr_number:
@@ -46,6 +46,10 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
+      - name: echo PR_NUMBER
+        run: |
+          echo PR_NUMBER: ${{ env.PR_NUMBER }}
+  
       - uses: actions/checkout@v2
         with:
           submodules: true
